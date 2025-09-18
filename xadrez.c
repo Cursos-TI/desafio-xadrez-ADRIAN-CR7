@@ -1,32 +1,114 @@
 #include <stdio.h>
 
-// Desafio de Xadrez - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de movimentação das peças de xadrez.
-// O objetivo é utilizar estruturas de repetição e funções para determinar os limites de movimentação dentro do jogo.
-
 int main() {
-    // Nível Novato - Movimentação das Peças
-    // Sugestão: Declare variáveis constantes para representar o número de casas que cada peça pode se mover.
+    int linha, linhaFinal;
+    char coluna, colunaFinal;
+    int opcao;
 
-    // Implementação de Movimentação do Bispo
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação do Bispo em diagonal.
+    // -------------------
+    // TORRE (while)
+    // -------------------
+    printf("=== TORRE ===\n");
+    printf("Digite a linha da torre (1-8): ");
+    scanf("%d", &linha);
+    printf("Digite a coluna da torre (a-h): ");
+    scanf(" %c", &coluna);
 
-    // Implementação de Movimentação da Torre
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação da Torre para a direita.
+    while(1) {
+        printf("Torre está em %c%d\n", coluna, linha);
 
-    // Implementação de Movimentação da Rainha
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação da Rainha para a esquerda.
+        printf("Digite linha destino da torre: ");
+        scanf("%d", &linhaFinal);
+        printf("Digite coluna destino da torre: ");
+        scanf(" %c", &colunaFinal);
 
-    // Nível Aventureiro - Movimentação do Cavalo
-    // Sugestão: Utilize loops aninhados para simular a movimentação do Cavalo em L.
-    // Um loop pode representar a movimentação horizontal e outro vertical.
+        // Limita movimentos da torre: só horizontal ou vertical
+        if(linhaFinal == linha || colunaFinal == coluna) {
+            linha = linhaFinal;
+            coluna = colunaFinal;
+            printf("Movimento válido! Torre agora em %c%d\n", coluna, linha);
+        } else {
+            printf("Movimento inválido! Torre só se move em linha ou coluna.\n");
+            continue;
+        }
 
-    // Nível Mestre - Funções Recursivas e Loops Aninhados
-    // Sugestão: Substitua as movimentações das peças por funções recursivas.
-    // Exemplo: Crie uma função recursiva para o movimento do Bispo.
+        printf("Digite negativo para sair, positivo para continuar: ");
+        scanf("%d", &opcao);
+        if(opcao < 0) break;
+    }
 
-    // Sugestão: Implemente a movimentação do Cavalo utilizando loops com variáveis múltiplas e condições avançadas.
-    // Inclua o uso de continue e break dentro dos loops.
+    // -------------------
+    // BISPO (do-while)
+    // -------------------
+    printf("\n=== BISPO ===\n");
+    printf("Digite a linha do bispo (1-8): ");
+    scanf("%d", &linha);
+    printf("Digite a coluna do bispo (a-h): ");
+    scanf(" %c", &coluna);
 
+    do {
+        printf("Bispo está em %c%d\n", coluna, linha);
+
+        printf("Digite linha destino do bispo: ");
+        scanf("%d", &linhaFinal);
+        printf("Digite coluna destino do bispo: ");
+        scanf(" %c", &colunaFinal);
+
+        int colunaNum = coluna - 'a';
+        int colunaFinalNum = colunaFinal - 'a';
+
+        // Limita movimentos do bispo: diagonal sem abs()
+        if ((linhaFinal - linha) == (colunaFinalNum - colunaNum) ||
+            (linhaFinal - linha) == (colunaNum - colunaFinalNum)) {
+            linha = linhaFinal;
+            coluna = colunaFinal;
+            printf("Movimento válido! Bispo agora em %c%d\n", coluna, linha);
+        } else {
+            printf("Movimento inválido! Bispo só se move em diagonal.\n");
+        }
+
+        printf("Digite negativo para sair, positivo para continuar: ");
+        scanf("%d", &opcao);
+
+    } while(opcao >= 0);
+
+    // -------------------
+    // RAINHA (for)
+    // -------------------
+    printf("\n=== RAINHA ===\n");
+    printf("Digite a linha da rainha (1-8): ");
+    scanf("%d", &linha);
+    printf("Digite a coluna da rainha (a-h): ");
+    scanf(" %c", &coluna);
+
+    for(;;) {
+        printf("Rainha está em %c%d\n", coluna, linha);
+
+        printf("Digite linha destino da rainha: ");
+        scanf("%d", &linhaFinal);
+        printf("Digite coluna destino da rainha: ");
+        scanf(" %c", &colunaFinal);
+
+        int colunaNum = coluna - 'a';
+        int colunaFinalNum = colunaFinal - 'a';
+
+        // Limita movimentos da rainha: linha, coluna ou diagonal sem abs()
+        if (linhaFinal == linha || colunaFinal == coluna ||
+            (linhaFinal - linha) == (colunaFinalNum - colunaNum) ||
+            (linhaFinal - linha) == (colunaNum - colunaFinalNum)) {
+            linha = linhaFinal;
+            coluna = colunaFinal;
+            printf("Movimento válido! Rainha agora em %c%d\n", coluna, linha);
+        } else {
+            printf("Movimento inválido! Rainha só se move em linha, coluna ou diagonal.\n");
+            continue;
+        }
+
+        printf("Digite negativo para sair, positivo para continuar: ");
+        scanf("%d", &opcao);
+        if(opcao < 0) break;
+    }
+
+    printf("Fim do programa!\n");
     return 0;
 }
