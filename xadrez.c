@@ -1,10 +1,12 @@
+#include <stdio.h>
+
 int main() {
-    int linha, linhaFinal, passos;
+    int linha, linhaFinal;
     char coluna, colunaFinal;
     int opcao;
 
     // -------------------
-    // TORRE (while)
+    // TORRE
     // -------------------
     printf("=== TORRE ===\n");
     printf("Digite a posição da torre (ex: a1): ");
@@ -45,13 +47,13 @@ int main() {
         linha = linhaFinal;
         coluna = colunaFinal;
 
-        printf("Continuar? (1 sim, 0 não): ");
+        printf("Continuar torre? (1 sim, 0 não): ");
         scanf("%d",&opcao);
         if(opcao==0) break;
     }
 
     // -------------------
-    // BISPO (while)
+    // BISPO
     // -------------------
     printf("\n=== BISPO ===\n");
     printf("Digite a posição do bispo (ex: c1): ");
@@ -91,19 +93,19 @@ int main() {
         linha = linhaFinal;
         coluna = colunaFinal;
 
-        printf("Continuar? (1 sim, 0 não): ");
+        printf("Continuar bispo? (1 sim, 0 não): ");
         scanf("%d",&opcao);
         if(opcao==0) break;
     }
 
     // -------------------
-    // RAINHA (for infinito)
+    // RAINHA
     // -------------------
     printf("\n=== RAINHA ===\n");
     printf("Digite a posição da rainha (ex: d1): ");
     scanf(" %c%d", &coluna, &linha);
 
-    for(;;) {
+    while(1) {
         printf("Digite o destino da rainha: ");
         scanf(" %c%d", &colunaFinal, &linhaFinal);
 
@@ -149,7 +151,57 @@ int main() {
         linha = linhaFinal;
         coluna = colunaFinal;
 
-        printf("Continuar? (1 sim, 0 não): ");
+        printf("Continuar rainha? (1 sim, 0 não): ");
+        scanf("%d",&opcao);
+        if(opcao==0) break;
+    }
+
+    // -------------------
+    // CAVALO
+    // -------------------
+    printf("\n=== CAVALO ===\n");
+    printf("Digite a posição do cavalo (ex: b1): ");
+    scanf(" %c%d", &coluna, &linha);
+
+    while(1) {
+        printf("Digite o destino do cavalo: ");
+        scanf(" %c%d", &colunaFinal, &linhaFinal);
+
+        int andaLinha = linhaFinal - linha;
+        int andaColuna = colunaFinal - coluna;
+
+        if(andaLinha == 2 && andaColuna == 1) {
+            printf("Cavalo foi cima cima direita\n");
+        }
+        else if(andaLinha == 2 && andaColuna == -1) {
+            printf("Cavalo foi cima cima esquerda\n");
+        }
+        else if(andaLinha == -2 && andaColuna == 1) {
+            printf("Cavalo foi baixo baixo direita\n");
+        }
+        else if(andaLinha == -2 && andaColuna == -1) {
+            printf("Cavalo foi baixo baixo esquerda\n");
+        }
+        else if(andaLinha == 1 && andaColuna == 2) {
+            printf("Cavalo foi cima direita direita\n");
+        }
+        else if(andaLinha == -1 && andaColuna == 2) {
+            printf("Cavalo foi baixo direita direita\n");
+        }
+        else if(andaLinha == 1 && andaColuna == -2) {
+            printf("Cavalo foi cima esquerda esquerda\n");
+        }
+        else if(andaLinha == -1 && andaColuna == -2) {
+            printf("Cavalo foi baixo esquerda esquerda\n");
+        }
+        else {
+            printf("Movimento inválido do cavalo!\n");
+        }
+
+        linha = linhaFinal;
+        coluna = colunaFinal;
+
+        printf("Continuar cavalo? (1 sim, 0 não): ");
         scanf("%d",&opcao);
         if(opcao==0) break;
     }
