@@ -1,54 +1,70 @@
 #include <stdio.h>
 
-// Função recursiva com loop aninhado para imprimir movimento
-void moverRecursivo(const char *movimento, int casas) {
-    if(casas == 0) return; // caso base
-
-    // Loop aninhado: apenas 1 repetição por passo, mas mostra a ideia de aninhamento
-    for(int j=0; j<1; j++) {
-        printf("%s ", movimento);
-    }
-
-    moverRecursivo(movimento, casas - 1); // chamada recursiva
+// -------------------
+// TORRE
+// -------------------
+void torre(int casas) {
+    if(casas == 0) return;       // caso base
+    printf("cima ");
+    torre(casas - 1);            // recursão
 }
 
-// Função para a torre
-void torre() {
-    printf("=== TORRE ===\n");
-    moverRecursivo("cima", 5);
-    printf("\n\n");
+// -------------------
+// BISPO
+// -------------------
+void bispo(int casas) {
+    if(casas == 0) return;       // caso base
+    printf("cima direita ");
+    bispo(casas - 1);            // recursão
 }
 
-// Função para o bispo
-void bispo() {
-    printf("=== BISPO ===\n");
-    moverRecursivo("cima direita", 5);
-    printf("\n\n");
+// -------------------
+// RAINHA
+// -------------------
+void rainha(int casas) {
+    if(casas == 0) return;       // caso base
+    printf("cima ");
+    rainha(casas - 1);           // recursão
 }
 
-// Função para o cavalo
+void rainhaBispo(int casas) {
+    if(casas == 0) return;       // caso base
+    printf("cima direita ");
+    rainhaBispo(casas - 1);      // recursão
+}
+
+// -------------------
+// CAVALO
+// -------------------
 void cavalo() {
-    printf("=== CAVALO ===\n");
-    moverRecursivo("cima cima direita", 1); // 1 movimento apenas
-    printf("\n\n");
-}
-
-// Função para a rainha
-void rainha() {
-    printf("=== RAINHA ===\n");
-    // Movimento tipo torre
-    moverRecursivo("cima", 5);
+    int movimentos = 2;
+    int i, j;
+    printf("Cavalo foi: ");
+    for(i = 0; i < movimentos; i++) {
+        for(j = 0; j < 1; j++) {  // loop aninhado
+            printf("cima cima direita ");
+        }
+    }
     printf("\n");
-    // Movimento tipo bispo
-    moverRecursivo("cima direita", 5);
-    printf("\n\n");
 }
 
 int main() {
-    torre();
-    bispo();
+    printf("=== TORRE ===\nTorre foi: ");
+    torre(5);
+    printf("\n\n");
+
+    printf("=== BISPO ===\nBispo foi: ");
+    bispo(5);
+    printf("\n\n");
+
     cavalo();
-    rainha();
+    printf("\n");
+
+    printf("=== RAINHA ===\nRainha tipo torre: ");
+    rainha(5);
+    printf("\nRainha tipo bispo: ");
+    rainhaBispo(5);
+    printf("\n\n");
 
     printf("=== Fim do programa ===\n");
     return 0;
