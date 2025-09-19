@@ -1,7 +1,5 @@
-#include <stdio.h>
-
 int main() {
-    int linha, linhaFinal;
+    int linha, linhaFinal, passos;
     char coluna, colunaFinal;
     int opcao;
 
@@ -9,106 +7,153 @@ int main() {
     // TORRE (while)
     // -------------------
     printf("=== TORRE ===\n");
-    printf("Digite a linha da torre (1-8): ");
-    scanf("%d", &linha);
-    printf("Digite a coluna da torre (a-h): ");
-    scanf(" %c", &coluna);
+    printf("Digite a posição da torre (ex: a1): ");
+    scanf(" %c%d", &coluna, &linha);
 
     while(1) {
-        printf("Torre está em %c%d\n", coluna, linha);
+        printf("Digite o destino da torre: ");
+        scanf(" %c%d", &colunaFinal, &linhaFinal);
 
-        printf("Digite linha destino da torre: ");
-        scanf("%d", &linhaFinal);
-        printf("Digite coluna destino da torre: ");
-        scanf(" %c", &colunaFinal);
-
-        // Limita movimentos da torre: só horizontal ou vertical
-        if(linhaFinal == linha || colunaFinal == coluna) {
-            linha = linhaFinal;
-            coluna = colunaFinal;
-            printf("Movimento válido! Torre agora em %c%d\n", coluna, linha);
-        } else {
-            printf("Movimento inválido! Torre só se move em linha ou coluna.\n");
-            continue;
+        if(linhaFinal == linha) {
+            if(colunaFinal > coluna) {
+                printf("Torre foi ");
+                for(char c=coluna; c<colunaFinal; c++) printf("direita ");
+                printf("\n");
+            }
+            if(colunaFinal < coluna) {
+                printf("Torre foi ");
+                for(char c=coluna; c>colunaFinal; c--) printf("esquerda ");
+                printf("\n");
+            }
+        }
+        else if(colunaFinal == coluna) {
+            if(linhaFinal > linha) {
+                printf("Torre foi ");
+                for(int l=linha; l<linhaFinal; l++) printf("cima ");
+                printf("\n");
+            }
+            if(linhaFinal < linha) {
+                printf("Torre foi ");
+                for(int l=linha; l>linhaFinal; l--) printf("baixo ");
+                printf("\n");
+            }
+        }
+        else {
+            printf("Movimento inválido da torre!\n");
         }
 
-        printf("Digite negativo para sair, positivo para continuar: ");
-        scanf("%d", &opcao);
-        if(opcao < 0) break;
+        linha = linhaFinal;
+        coluna = colunaFinal;
+
+        printf("Continuar? (1 sim, 0 não): ");
+        scanf("%d",&opcao);
+        if(opcao==0) break;
     }
 
     // -------------------
-    // BISPO (do-while)
+    // BISPO (while)
     // -------------------
     printf("\n=== BISPO ===\n");
-    printf("Digite a linha do bispo (1-8): ");
-    scanf("%d", &linha);
-    printf("Digite a coluna do bispo (a-h): ");
-    scanf(" %c", &coluna);
+    printf("Digite a posição do bispo (ex: c1): ");
+    scanf(" %c%d", &coluna, &linha);
 
-    do {
-        printf("Bispo está em %c%d\n", coluna, linha);
+    while(1) {
+        printf("Digite o destino do bispo: ");
+        scanf(" %c%d", &colunaFinal, &linhaFinal);
 
-        printf("Digite linha destino do bispo: ");
-        scanf("%d", &linhaFinal);
-        printf("Digite coluna destino do bispo: ");
-        scanf(" %c", &colunaFinal);
+        int andaLinha = linhaFinal - linha;
+        int andaColuna = colunaFinal - coluna;
 
-        int colunaNum = coluna - 'a';
-        int colunaFinalNum = colunaFinal - 'a';
-
-        // Limita movimentos do bispo: diagonal sem abs()
-        if ((linhaFinal - linha) == (colunaFinalNum - colunaNum) ||
-            (linhaFinal - linha) == (colunaNum - colunaFinalNum)) {
-            linha = linhaFinal;
-            coluna = colunaFinal;
-            printf("Movimento válido! Bispo agora em %c%d\n", coluna, linha);
-        } else {
-            printf("Movimento inválido! Bispo só se move em diagonal.\n");
+        if(andaLinha > 0 && andaColuna > 0 && andaLinha == andaColuna) {
+            printf("Bispo foi ");
+            for(int i=0; i<andaLinha; i++) printf("cima direita ");
+            printf("\n");
+        }
+        else if(andaLinha > 0 && andaColuna < 0 && andaLinha == -andaColuna) {
+            printf("Bispo foi ");
+            for(int i=0; i<andaLinha; i++) printf("cima esquerda ");
+            printf("\n");
+        }
+        else if(andaLinha < 0 && andaColuna > 0 && -andaLinha == andaColuna) {
+            printf("Bispo foi ");
+            for(int i=0; i<-andaLinha; i++) printf("baixo direita ");
+            printf("\n");
+        }
+        else if(andaLinha < 0 && andaColuna < 0 && andaLinha == andaColuna) {
+            printf("Bispo foi ");
+            for(int i=0; i<-andaLinha; i++) printf("baixo esquerda ");
+            printf("\n");
+        }
+        else {
+            printf("Movimento inválido do bispo!\n");
         }
 
-        printf("Digite negativo para sair, positivo para continuar: ");
-        scanf("%d", &opcao);
+        linha = linhaFinal;
+        coluna = colunaFinal;
 
-    } while(opcao >= 0);
-
-    // -------------------
-    // RAINHA (for)
-    // -------------------
-    printf("\n=== RAINHA ===\n");
-    printf("Digite a linha da rainha (1-8): ");
-    scanf("%d", &linha);
-    printf("Digite a coluna da rainha (a-h): ");
-    scanf(" %c", &coluna);
-
-    for(;;) {
-        printf("Rainha está em %c%d\n", coluna, linha);
-
-        printf("Digite linha destino da rainha: ");
-        scanf("%d", &linhaFinal);
-        printf("Digite coluna destino da rainha: ");
-        scanf(" %c", &colunaFinal);
-
-        int colunaNum = coluna - 'a';
-        int colunaFinalNum = colunaFinal - 'a';
-
-        // Limita movimentos da rainha: linha, coluna ou diagonal sem abs()
-        if (linhaFinal == linha || colunaFinal == coluna ||
-            (linhaFinal - linha) == (colunaFinalNum - colunaNum) ||
-            (linhaFinal - linha) == (colunaNum - colunaFinalNum)) {
-            linha = linhaFinal;
-            coluna = colunaFinal;
-            printf("Movimento válido! Rainha agora em %c%d\n", coluna, linha);
-        } else {
-            printf("Movimento inválido! Rainha só se move em linha, coluna ou diagonal.\n");
-            continue;
-        }
-
-        printf("Digite negativo para sair, positivo para continuar: ");
-        scanf("%d", &opcao);
-        if(opcao < 0) break;
+        printf("Continuar? (1 sim, 0 não): ");
+        scanf("%d",&opcao);
+        if(opcao==0) break;
     }
 
-    printf("Fim do programa!\n");
+    // -------------------
+    // RAINHA (for infinito)
+    // -------------------
+    printf("\n=== RAINHA ===\n");
+    printf("Digite a posição da rainha (ex: d1): ");
+    scanf(" %c%d", &coluna, &linha);
+
+    for(;;) {
+        printf("Digite o destino da rainha: ");
+        scanf(" %c%d", &colunaFinal, &linhaFinal);
+
+        int andaLinha = linhaFinal - linha;
+        int andaColuna = colunaFinal - coluna;
+
+        if(linhaFinal == linha) {
+            printf("Rainha foi ");
+            if(colunaFinal > coluna) for(char c=coluna; c<colunaFinal; c++) printf("direita ");
+            if(colunaFinal < coluna) for(char c=coluna; c>colunaFinal; c--) printf("esquerda ");
+            printf("\n");
+        }
+        else if(colunaFinal == coluna) {
+            printf("Rainha foi ");
+            if(linhaFinal > linha) for(int l=linha; l<linhaFinal; l++) printf("cima ");
+            if(linhaFinal < linha) for(int l=linha; l>linhaFinal; l--) printf("baixo ");
+            printf("\n");
+        }
+        else if(andaLinha > 0 && andaColuna > 0 && andaLinha == andaColuna) {
+            printf("Rainha foi ");
+            for(int i=0; i<andaLinha; i++) printf("cima direita ");
+            printf("\n");
+        }
+        else if(andaLinha > 0 && andaColuna < 0 && andaLinha == -andaColuna) {
+            printf("Rainha foi ");
+            for(int i=0; i<andaLinha; i++) printf("cima esquerda ");
+            printf("\n");
+        }
+        else if(andaLinha < 0 && andaColuna > 0 && -andaLinha == andaColuna) {
+            printf("Rainha foi ");
+            for(int i=0; i<-andaLinha; i++) printf("baixo direita ");
+            printf("\n");
+        }
+        else if(andaLinha < 0 && andaColuna < 0 && andaLinha == andaColuna) {
+            printf("Rainha foi ");
+            for(int i=0; i<-andaLinha; i++) printf("baixo esquerda ");
+            printf("\n");
+        }
+        else {
+            printf("Movimento inválido da rainha!\n");
+        }
+
+        linha = linhaFinal;
+        coluna = colunaFinal;
+
+        printf("Continuar? (1 sim, 0 não): ");
+        scanf("%d",&opcao);
+        if(opcao==0) break;
+    }
+
+    printf("\nFim do programa!\n");
     return 0;
 }
